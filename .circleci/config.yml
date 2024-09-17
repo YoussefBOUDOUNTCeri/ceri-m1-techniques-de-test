@@ -1,9 +1,14 @@
 version: 2.1
 
-jobs:
-  build:
+executors:
+  maven-executor:
     docker:
       - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+
+jobs:
+  build:
+    executor: maven-executor
     steps:
       - checkout
       - run:
@@ -20,4 +25,5 @@ workflows:
       - build:
         filters:
           branches:
-            only: master
+            only:
+              - master
