@@ -33,6 +33,8 @@
     </dependencies>
 
     <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
         <plugins>
             <!-- Plugin Maven Compiler pour Java 8 -->
             <plugin>
@@ -44,19 +46,14 @@
                     <target>1.8</target> <!-- Version cible -->
                 </configuration>
             </plugin>
-        </plugins>
-    </build>
 
-    <build>
-        <testSourceDirectory>src/test/java</testSourceDirectory>
-        <plugins>
+            <!-- Plugin Surefire pour l'exécution des tests -->
             <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>2.22.2</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
             </plugin>
         </plugins>
     </build>
-
 
 </project>
