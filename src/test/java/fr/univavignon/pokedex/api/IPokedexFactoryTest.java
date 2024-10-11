@@ -25,7 +25,7 @@ public class IPokedexFactoryTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        // Mock the IPokedex creation
+        // Mock la création du pokedex
         pokedex = mock(IPokedex.class);
         when(pokedexFactory.createPokedex(metadataProvider, pokemonFactory)).thenReturn(pokedex);
     }

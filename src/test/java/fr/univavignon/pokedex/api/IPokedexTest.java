@@ -29,11 +29,11 @@ public class IPokedexTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        // Create mock Pokémon
+        // Creation des Mocks pokemon
         bulbasaur = new Pokemon(0, "Bulbasaur", 126, 126, 90, 613, 64, 4000, 4, 56);
         charmander = new Pokemon(4, "Charmander", 128, 108, 78, 600, 60, 3000, 3, 67);
 
-        // Mock the Pokedex methods
+        // Mocker les appels à pokedex
         when(pokedex.size()).thenReturn(2);
         when(pokedex.getPokemon(0)).thenReturn(bulbasaur);
         when(pokedex.getPokemon(4)).thenReturn(charmander);

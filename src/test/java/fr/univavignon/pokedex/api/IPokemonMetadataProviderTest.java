@@ -56,7 +56,7 @@ public class IPokemonMetadataProviderTest {
         // Configurer le mock pour qu'il lance une PokedexException pour l'index 999
         doThrow(new PokedexException("Invalid index")).when(pokemonMetadataProvider).getPokemonMetadata(999);
 
-        // Tester avec un index invalide, cela devrait lancer une exception
+        // Tester avec un index invalide
         pokemonMetadataProvider.getPokemonMetadata(999);
     }
 
