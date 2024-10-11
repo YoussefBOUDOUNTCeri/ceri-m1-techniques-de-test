@@ -37,7 +37,7 @@ public class IPokemonTrainerFactoryTest {
 
     @Test
     // On teste la création d'un entraîneur
-    public void testCreateTrainer() {
+    public void testCreateTrainer() throws PokedexException {
         PokemonTrainer trainer = pokemonTrainerFactory.createTrainer("Ash", Team.VALOR, pokedexFactory);
         assertNotNull(trainer);
         assertEquals("Ash", trainer.getName());
@@ -48,7 +48,7 @@ public class IPokemonTrainerFactoryTest {
 
     @Test
     // On teste la création d'un entraîneur avec un nom différent mais la même équipe
-    public void testCreateTrainerDifferentTeam() {
+    public void testCreateTrainerDifferentTeam() throws PokedexException {
         // Préparation d'un autre entraîneur avec une équipe différente
         PokemonTrainer mistyTrainer = new PokemonTrainer("Misty", Team.MYSTIC, pokedex);
         when(pokemonTrainerFactory.createTrainer(eq("Misty"), eq(Team.MYSTIC), any(IPokedexFactory.class))).thenReturn(mistyTrainer);
@@ -63,7 +63,7 @@ public class IPokemonTrainerFactoryTest {
 
     @Test
     // On teste la création d'un entraîneur avec un nom différent et une équipe différente
-    public void testCreateTrainerWithNullName() {
+    public void testCreateTrainerWithNullName() throws PokedexException {
         // Tester le comportement lorsque le nom est null
         when(pokemonTrainerFactory.createTrainer(eq(null), eq(Team.VALOR), any(IPokedexFactory.class)))
                 .thenThrow(new IllegalArgumentException("Name cannot be null"));
@@ -78,7 +78,7 @@ public class IPokemonTrainerFactoryTest {
 
     @Test
     // On teste la création d'un entraîneur avec un nom null et une équipe null
-    public void testCreateTrainerWithNullTeam() {
+    public void testCreateTrainerWithNullTeam() throws PokedexException {
         when(pokemonTrainerFactory.createTrainer(eq("Ash"), eq(null), any(IPokedexFactory.class)))
                 .thenThrow(new IllegalArgumentException("Team cannot be null"));
 
@@ -92,7 +92,7 @@ public class IPokemonTrainerFactoryTest {
 
     @Test
     // On teste la création d'un entraîneur lorsque le pokedexFactory est null
-    public void testCreateTrainerWithNullPokedexFactory() {
+    public void testCreateTrainerWithNullPokedexFactory() throws PokedexException {
         when(pokemonTrainerFactory.createTrainer(eq("Ash"), eq(Team.VALOR), eq(null)))
                 .thenThrow(new IllegalArgumentException("PokedexFactory cannot be null"));
 
