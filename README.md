@@ -1,5 +1,3 @@
-Ce projet fait partie du cours sur les techniques de test.
-
 # Projet Pokedex API
 
 ## Badges
