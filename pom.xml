@@ -54,7 +54,7 @@
                 <version>2.22.2</version>
             </plugin>
 
-            <!-- Pour TP4 -->
+            <!-- Pour TP4 : JaCoCo plugin-->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
