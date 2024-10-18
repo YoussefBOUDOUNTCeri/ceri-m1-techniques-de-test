@@ -75,13 +75,13 @@
                 </executions>
             </plugin>
 
-            <!-- Pour TP4 :  Checkstyle -->
+            <!-- Pour TP5 :  Checkstyle -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.1.2</version> 
                 <configuration>
-                    <configLocation>checkstyle.xml</configLocation>
+                    <configLocation>${basedir}/checkstyle.xml</configLocation>
                     <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>
@@ -97,8 +97,6 @@
                 </executions>
             </plugin>
         </plugins>
-
-
 
     </build>
 
