@@ -16,7 +16,7 @@ public class PokemonTrainerFactory implements IPokemonTrainerFactory {
             throw new IllegalArgumentException("PokedexFactory cannot be null");
         }
 
-        IPokedex pokedex = pokedexFactory.createPokedex(new PokemonMetadataProvider(), new PokemonFactory());
+        final IPokedex pokedex = pokedexFactory.createPokedex(new PokemonMetadataProvider(), new PokemonFactory());
 
         return new PokemonTrainer(name, team, pokedex);
     }
