@@ -15,6 +15,9 @@ jobs:
           name: Install dependencies
           command: mvn install -DskipTests
       - run:
+          name: Run Checkstyle
+          command: mvn checkstyle:check
+      - run:
           name: Run unit tests and generate coverage report
           command: mvn test jacoco:report
       - run:
