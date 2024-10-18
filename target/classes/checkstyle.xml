@@ -3,11 +3,13 @@
     "https://checkstyle.org/dtds/configuration_1_3.dtd">
 
 <module name="Checker">
+    <!-- LineLength doit être au niveau de Checker -->
+    <module name="LineLength">
+        <property name="max" value="120"/>
+    </module>
+
     <module name="TreeWalker">
         <module name="JavadocMethod"/>
-        <module name="LineLength">
-            <property name="max" value="120"/>
-        </module>
         <module name="WhitespaceAround"/>
         <module name="FinalLocalVariable"/>
         <module name="UnusedImports"/>
