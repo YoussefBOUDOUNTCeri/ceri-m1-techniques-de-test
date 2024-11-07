@@ -39,6 +39,7 @@ jobs:
             git clone --branch gh-pages https://$GITHUB_TOKEN@github.com/YoussefBOUDOUNTCeri/ceri-m1-techniques-de-test.git gh-pages
             cp -R target/site/apidocs/* gh-pages/
             cd gh-pages
+            git remote set-url origin https://$GITHUB_TOKEN@github.com/YoussefBOUDOUNTCeri/ceri-m1-techniques-de-test.git
             git add .
             git commit -m "Auto-update Javadoc"
             git push origin gh-pages
