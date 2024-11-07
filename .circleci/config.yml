@@ -3,7 +3,7 @@ version: 2.1
 executors:
   maven-executor:
     docker:
-      - image: circleci/openjdk:8-jdk
+      - image: cimg/openjdk:8.0
     working_directory: ~/repo
 
 jobs:
@@ -27,6 +27,9 @@ jobs:
   deploy-docs:
     executor: maven-executor
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:EUtKI4mcV9G21S5yNlEVHL/8bA58a+Rir9gLuBgO17c"
       - checkout
       - run:
           name: Generate Javadoc
@@ -34,14 +37,17 @@ jobs:
       - run:
           name: Deploy Javadoc to GitHub Pages
           command: |
+            # Configurer les informations utilisateur Git
             git config --global user.email "ybodount84@gmail.com"
             git config --global user.name "YoussefBOUDOUNTCeri"
-            git clone --branch gh-pages https://$GITHUB_TOKEN@github.com/YoussefBOUDOUNTCeri/ceri-m1-techniques-de-test.git gh-pages
+            # Cloner la branche gh-pages en utilisant l'URL SSH
+            git clone --branch gh-pages git@github.com:YoussefBOUDOUNTCeri/ceri-m1-techniques-de-test.git gh-pages
+            # Copier les fichiers Javadoc générés dans le dépôt cloné
             cp -R target/site/apidocs/* gh-pages/
             cd gh-pages
-            git remote set-url origin https://$GITHUB_TOKEN@github.com/YoussefBOUDOUNTCeri/ceri-m1-techniques-de-test.git
             git add .
             git commit -m "Auto-update Javadoc"
+            # Pousser les changements vers gh-pages
             git push origin gh-pages
 
 workflows:
@@ -54,6 +60,8 @@ workflows:
               only:
                 - master
       - deploy-docs:
+          requires:
+            - build
           filters:
             branches:
               only:
