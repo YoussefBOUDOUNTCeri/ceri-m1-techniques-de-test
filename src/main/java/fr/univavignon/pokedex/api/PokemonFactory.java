@@ -1,19 +1,34 @@
 package fr.univavignon.pokedex.api;
 
-
 public class PokemonFactory implements IPokemonFactory {
+
+    private IPokemonMetadataProvider metadataProvider;
+
+    public PokemonFactory(IPokemonMetadataProvider metadataProvider) {
+        this.metadataProvider = metadataProvider;
+    }
 
     @Override
     public Pokemon createPokemon(int index, int cp, int hp, int dust, int candy) {
-        // Mock data for Pokemon metadata (replace it with real metadata provider)
-        final int baseAttack = 100;
-        final int baseDefense = 100;
-        final int baseStamina = 100;
+        try {
+            PokemonMetadata metadata = metadataProvider.getPokemonMetadata(index);
+            final double iv = 100.0;
 
-        // Calculate IV perfection (this is just an example, you can change the calculation)
-        final double iv = (baseAttack + baseDefense + baseStamina) / 45.0 * 100.0;
-
-        // Create and return a new Pokemon instance
-        return new Pokemon(index, "GeneratedPokemon", baseAttack, baseDefense, baseStamina, cp, hp, dust, candy, iv);
+            return new Pokemon(
+                index,
+                metadata.getName(),
+                metadata.getAttack(),
+                metadata.getDefense(),
+                metadata.getStamina(),
+                cp,
+                hp,
+                dust,
+                candy,
+                iv
+            );
+        } catch (PokedexException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
