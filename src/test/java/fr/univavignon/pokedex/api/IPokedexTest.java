@@ -1,62 +1,29 @@
 package fr.univavignon.pokedex.api;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class IPokedexTest {
 
-    @Mock
     private IPokedex pokedex;
-
-    @Mock
     private IPokemonMetadataProvider metadataProvider;
-
-    @Mock
     private IPokemonFactory pokemonFactory;
-
-    private Pokemon bulbasaur;
-    private Pokemon charmander;
 
     @Before
     public void setUp() throws PokedexException {
-        MockitoAnnotations.initMocks(this);
+        metadataProvider = new PokemonMetadataProvider();
+        pokemonFactory = new PokemonFactory(metadataProvider);
+        pokedex = new Pokedex(metadataProvider, pokemonFactory);
 
-        // Création des mocks de Pokémon
-        bulbasaur = new Pokemon(0, "Bulbasaur", 126, 126, 90, 613, 64, 4000, 4, 56);
-        charmander = new Pokemon(4, "Charmander", 128, 108, 78, 600, 60, 3000, 3, 67);
+        Pokemon bulbizarre = pokemonFactory.createPokemon(0, 613, 64, 4000, 4);
+        Pokemon aquali = pokemonFactory.createPokemon(133, 2729, 202, 5000, 4);
 
-        // Mock des appels au pokedex
-        when(pokedex.size()).thenReturn(2);
-        when(pokedex.getPokemon(0)).thenReturn(bulbasaur);
-        when(pokedex.getPokemon(4)).thenReturn(charmander);
-
-        List<Pokemon> pokemons = new ArrayList<>();
-        pokemons.add(bulbasaur);
-        pokemons.add(charmander);
-
-        when(pokedex.getPokemons()).thenReturn(pokemons);
-        when(pokedex.getPokemons(PokemonComparators.NAME)).thenReturn(pokemons);
-        when(pokedex.addPokemon(bulbasaur)).thenReturn(0);
-        when(pokedex.addPokemon(charmander)).thenReturn(1);
-    }
-
-    @Test
-    public void testGetPokemon() throws PokedexException {
-        Pokemon pokemon = pokedex.getPokemon(0);
-        assertNotNull(pokemon);
-        assertEquals("Bulbasaur", pokemon.getName());
-
-        pokemon = pokedex.getPokemon(4);
-        assertNotNull(pokemon);
-        assertEquals("Charmander", pokemon.getName());
+        pokedex.addPokemon(bulbizarre);
+        pokedex.addPokemon(aquali);
     }
 
     @Test
@@ -65,29 +32,62 @@ public class IPokedexTest {
     }
 
     @Test
-    public void testAddPokemon() {
-        int index = pokedex.addPokemon(bulbasaur);
-        assertEquals(0, index);
+    public void testAddPokemon() throws PokedexException {
+        Pokemon pikachu = pokemonFactory.createPokemon(25, 500, 60, 3000, 3);
+        int index = pokedex.addPokemon(pikachu);
+        assertEquals(2, index);
+        assertEquals(3, pokedex.size());
+        assertEquals(pikachu, pokedex.getPokemon(2));
+    }
 
-        index = pokedex.addPokemon(charmander);
-        assertEquals(1, index);
+    @Test
+    public void testGetPokemon() throws PokedexException {
+        Pokemon pokemon = pokedex.getPokemon(0);
+        assertNotNull(pokemon);
+        assertEquals("Bulbizarre", pokemon.getName());
+
+        pokemon = pokedex.getPokemon(1);
+        assertNotNull(pokemon);
+        assertEquals("Aquali", pokemon.getName());
+    }
+
+    @Test(expected = PokedexException.class)
+    public void testGetPokemonInvalidIndex() throws PokedexException {
+        pokedex.getPokemon(10);
     }
 
     @Test
     public void testGetPokemons() {
         List<Pokemon> pokemons = pokedex.getPokemons();
-        assertNotNull(pokemons);
         assertEquals(2, pokemons.size());
-        assertEquals("Bulbasaur", pokemons.get(0).getName());
-        assertEquals("Charmander", pokemons.get(1).getName());
+        assertEquals("Bulbizarre", pokemons.get(0).getName());
+        assertEquals("Aquali", pokemons.get(1).getName());
     }
 
     @Test
     public void testGetPokemonsSortedByName() {
         List<Pokemon> pokemons = pokedex.getPokemons(PokemonComparators.NAME);
-        assertNotNull(pokemons);
-        assertEquals(2, pokemons.size());
-        assertEquals("Bulbasaur", pokemons.get(0).getName());
-        assertEquals("Charmander", pokemons.get(1).getName());
+        assertEquals("Aquali", pokemons.get(0).getName());
+        assertEquals("Bulbizarre", pokemons.get(1).getName());
+    }
+
+    @Test
+    public void testGetPokemonMetadata() throws PokedexException {
+        PokemonMetadata metadata = pokedex.getPokemonMetadata(0);
+        assertNotNull(metadata);
+        assertEquals("Bulbizarre", metadata.getName());
+    }
+
+    @Test(expected = PokedexException.class)
+    public void testGetPokemonMetadataInvalidIndex() throws PokedexException {
+        pokedex.getPokemonMetadata(999);
+    }
+
+    @Test
+    public void testCreatePokemon() {
+        Pokemon pikachu = pokedex.createPokemon(25, 500, 60, 3000, 3);
+        assertNotNull(pikachu);
+        assertEquals(25, pikachu.getIndex());
+        assertEquals("Pikachu", pikachu.getName());
     }
 }
