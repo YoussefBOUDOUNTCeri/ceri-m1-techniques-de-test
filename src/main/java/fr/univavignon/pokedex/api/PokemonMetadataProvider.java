@@ -1,4 +1,3 @@
-// src/main/java/fr/univavignon/pokedex/api/PokemonMetadataProvider.java
 package fr.univavignon.pokedex.api;
 
 import java.util.HashMap;
