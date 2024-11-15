@@ -66,7 +66,7 @@ public class IPokedexTest {
             pokedex.getPokemon(2);
             fail("Expected PokedexException");
         } catch (PokedexException e) {
-            // Exception attendue
+            // Expected exception
         }
     }
 
@@ -115,5 +115,4 @@ public class IPokedexTest {
         assertEquals(0, pokemon.getIndex());
         assertEquals("Bulbizarre", pokemon.getName());
     }
-
 }
