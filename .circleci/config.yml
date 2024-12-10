@@ -40,14 +40,17 @@ jobs:
             # Configurer les informations utilisateur Git
             git config --global user.email "ybodount84@gmail.com"
             git config --global user.name "YoussefBOUDOUNTCeri"
+            
             # Cloner la branche gh-pages dans un répertoire temporaire
             mkdir -p /tmp/gh-pages
             git clone --branch gh-pages git@github.com:YoussefBOUDOUNTCeri/ceri-m1-techniques-de-test.git /tmp/gh-pages
+            
             # Copier les fichiers Javadoc générés dans le dépôt cloné
             cp -R target/site/apidocs/* /tmp/gh-pages/
             cd /tmp/gh-pages
             git add .
             git commit -m "Auto-update Javadoc"
+            
             # Pousser les changements vers gh-pages
             git push origin gh-pages
 
