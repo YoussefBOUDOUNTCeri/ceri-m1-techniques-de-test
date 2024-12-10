@@ -2,7 +2,7 @@ package fr.univavignon.pokedex.api;
 
 import java.util.Comparator;
 import java.util.List;
-import java.awt.image.renderable.*;
+//import java.awt.image.renderable.*;
 
 /**
  * IPokedex interface. An IPokedex aims to store all information about
