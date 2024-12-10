@@ -42,4 +42,5 @@ public class RocketPokemonFactoryTest {
         assertTrue(pokemon.getDefense() >= 0 && pokemon.getDefense() <= 15);
         assertTrue(pokemon.getStamina() >= 0 && pokemon.getStamina() <= 15);
     }
+    
 }
